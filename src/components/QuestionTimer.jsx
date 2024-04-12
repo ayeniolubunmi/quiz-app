@@ -3,13 +3,19 @@ import React, { useEffect, useState } from 'react';
 const QuestionTimer = ({timeout, ontimeout}) => {
     const [remainingTime, setRemainingTime] = useState(timeout);
     useEffect(()=>{
-        setTimeout(timeout, ontimeout)
+        const timer = setTimeout(timeout, ontimeout)
+        return ()=>{
+            clearTimeout(timer);
+        }
     },[timeout,ontimeout]);
 
     useEffect(()=>{
-        setInterval(()=>{
+        const interval = setInterval(()=>{
             setRemainingTime((prevRemainingTime)=>prevRemainingTime-100)
-        },100)
+        },100);
+        return()=>{
+            clearInterval(interval)
+        }
     },[]);
 
   return (
